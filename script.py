@@ -16,4 +16,4 @@ if __name__ == '__main__':
     parsed_args = parser.parse_args()
 
     print(parsed_args)
-    main(parsed_args)
+    main.run(parsed_args)
