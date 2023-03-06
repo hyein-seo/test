@@ -46,12 +46,12 @@ def main(parsed_args):
 
     # Build DevplayAnalyticsAdmin
     DA = DevplayAnalyticsConfig(
-      game_code=parsed_args.game_code,
-      env_code=parsed_args.env_code,
-      is_test_read=False,
-      is_test_write=parsed_args.test,
-      config=eval(parsed_args.config),
-      config_test=eval(parsed_args.config_test)
+        eval(parsed_args.config),
+        eval(parsed_args.config_test),
+        parsed_args.game_code,
+        parsed_args.env_code,
+        False,  # is_test_read
+        parsed_args.test    # is_test_write
     ).build_devplay_analytics_admin(target_date=parsed_args.target_date)
 
     params = {
