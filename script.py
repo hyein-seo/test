@@ -1,4 +1,6 @@
 import requests
+from requests.auth import HTTPBasicAuth
+
 from pyspark.sql import SparkSession
 
 from pyspark.dbutils import DBUtils
