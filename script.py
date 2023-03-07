@@ -1,4 +1,4 @@
-import request
+import requests
 from pyspark.dbutils import DBUtils
 
 
