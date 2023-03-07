@@ -1,20 +1,27 @@
+import request
+from pyspark.dbutils import DBUtils
+
+
+def query_es_api(spark, end_point):
+    dbutils = DBUtils(spark)
+
+    dbutils.secrets.get()
+
+    ES_HOST = dbutils.secrets.get(scope='elasticsearch', key="HOST")
+    ID = dbutils.secrets.get(scope='elasticsearch', key="ID")
+    PW = dbutils.secrets.get(scope='elasticsearch', key="PASSWORD")
+
+    auth = HTTPBasicAuth(ID, PW)
+
+    url = ES_HOST + end_point
+    headers = {'Content-Type': 'application/json'}
+    return requests.get(url, auth=auth, verify=False, headers=headers)
 
 
 if __name__ == '__main__':
-    import argparse
+    spark = SparkSession.builder \
+        .config('spark.sql.sources.partitionColumnTypeInference.enabled', 'false') \
+        .getOrCreate()
 
-    from dbr_test import main
-
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument('--game_code', type=str)
-    parser.add_argument('--env_code', type=str)
-    parser.add_argument('--log_type', type=str)
-    parser.add_argument('--target_date', type=str)
-    parser.add_argument('--config', type=str)
-    parser.add_argument('--config_test', type=str)
-    parser.add_argument('--test', action='store_true', default=False)
-    parsed_args = parser.parse_args()
-
-    print(parsed_args)
-    main.run(parsed_args)
+    res = query_es_api(spark, '_cluster/health')
+    print(res)
