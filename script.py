@@ -7,8 +7,6 @@ from pyspark.dbutils import DBUtils
 def query_es_api(spark, end_point):
     dbutils = DBUtils(spark)
 
-    dbutils.secrets.get()
-
     ES_HOST = dbutils.secrets.get(scope='elasticsearch', key="HOST")
     ID = dbutils.secrets.get(scope='elasticsearch', key="ID")
     PW = dbutils.secrets.get(scope='elasticsearch', key="PASSWORD")
